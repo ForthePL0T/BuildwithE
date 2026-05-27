@@ -1,0 +1,6 @@
+{
+  "name": "Minimalist Work Portfolio",
+  "description": "An elegant, high-contrast, text-centered portfolio featuring custom updateable projects, persistent blogs, and dynamic GitHub integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
