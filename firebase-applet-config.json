@@ -1,10 +1,21 @@
-{
-  "projectId": "green-way-rw1xt",
-  "appId": "1:345509306930:web:38d88709fb0d43ecd2122b",
-  "apiKey": "AIzaSyBukd54zWSXfHlajR703hcjGiSxm558zvY",
-  "authDomain": "green-way-rw1xt.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-0338c18b-f485-4e1c-a9dc-a328e49b9964",
-  "storageBucket": "green-way-rw1xt.firebasestorage.app",
-  "messagingSenderId": "345509306930",
-  "measurementId": ""
-}
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBQqIk8cers1mOeILdjbMszi_CMkVNBFyo",
+  authDomain: "portfoliowebsite-748c5.firebaseapp.com",
+  projectId: "portfoliowebsite-748c5",
+  storageBucket: "portfoliowebsite-748c5.firebasestorage.app",
+  messagingSenderId: "939616227778",
+  appId: "1:939616227778:web:5a67642cc5fa1feb76065b",
+  measurementId: "G-6RRK0CPC00"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
