@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "ProjectSettings": {
+      "title": "ProjectSettings",
+      "description": "Main global settings and bio info for the portfolio user.",
+      "type": "object",
+      "properties": {
+        "profileName": { "type": "string" },
+        "profileRole": { "type": "string" },
+        "profileBio": { "type": "string" },
+        "aboutText": { "type": "string" },
+        "email": { "type": "string" },
+        "githubUrl": { "type": "string" },
+        "linkedinUrl": { "type": "string" },
+        "twitterUrl": { "type": "string" }
+      },
+      "required": ["profileName", "profileRole", "profileBio"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "A portfolio project demonstrating software mastery.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "codeLanguage": { "type": "string" },
+        "date": { "type": "string" },
+        "summary": { "type": "string" },
+        "description": { "type": "string" },
+        "technologies": { "type": "array" },
+        "githubLink": { "type": "string" },
+        "liveLink": { "type": "string" },
+        "isFeatured": { "type": "boolean" },
+        "stars": { "type": "integer" },
+        "forks": { "type": "integer" }
+      },
+      "required": ["id", "title", "codeLanguage", "summary"]
+    },
+    "Blog": {
+      "title": "Blog",
+      "description": "A blog article or essay.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "readTime": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "tags": { "type": "array" }
+      },
+      "required": ["id", "title", "date", "content"]
+    },
+    "Journal": {
+      "title": "Journal",
+      "description": "A shorter, developer journal log post.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string" },
+        "content": { "type": "string" },
+        "intensity": { "type": "string" }
+      },
+      "required": ["id", "title", "date", "content"]
+    },
+    "VisitorMessage": {
+      "title": "VisitorMessage",
+      "description": "A contact message received from visitors.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderEmail": { "type": "string" },
+        "messageText": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "senderName", "senderEmail", "messageText", "timestamp"]
+    }
+  },
+  "firestore": {
+    "settings": {
+      "schema": "ProjectSettings",
+      "description": "Collection containing the global layout bio/settings."
+    },
+    "projects": {
+      "schema": "Project",
+      "description": "Collection containing all portfolio projects."
+    },
+    "blogs": {
+      "schema": "Blog",
+      "description": "Collection of developer articles and thoughts."
+    },
+    "journals": {
+      "schema": "Journal",
+      "description": "Collection of direct raw log entries."
+    },
+    "messages": {
+      "schema": "VisitorMessage",
+      "description": "Collection of feedback and messages from guests."
+    }
+  }
+}

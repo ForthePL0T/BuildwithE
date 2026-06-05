@@ -1,0 +1,99 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net: Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && 
+             request.auth.token.email == "eshaankalyankumar@gmail.com" && 
+             request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Settings validations
+    function isValidSettings(data) {
+      return data.profileName is string && data.profileName.size() <= 200 &&
+             data.profileRole is string && data.profileRole.size() <= 200 &&
+             data.profileBio is string && data.profileBio.size() <= 2000;
+    }
+
+    // Projects validations
+    function isValidProject(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.description is string && data.description.size() <= 10000 &&
+             data.date is string && data.date.size() <= 100;
+    }
+
+    // Blogs validations
+    function isValidBlog(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.date is string && data.date.size() <= 100 &&
+             data.content is string && data.content.size() <= 50000;
+    }
+
+    // Journals validations
+    function isValidJournal(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.date is string && data.date.size() <= 100 &&
+             data.content is string && data.content.size() <= 50000;
+    }
+
+    // Messages validations
+    function isValidMessage(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.senderName is string && data.senderName.size() <= 150 &&
+             data.senderEmail is string && data.senderEmail.size() <= 150 &&
+             data.messageText is string && data.messageText.size() <= 5000 &&
+             data.timestamp is string && data.timestamp.size() <= 100;
+    }
+
+    // 1. Settings (read by anyone; write only by verified admin)
+    match /settings/{docId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidSettings(request.resource.data) && isValidId(docId);
+      allow delete: if isAdmin();
+    }
+
+    // 2. Projects (read by anyone; write only by verified admin)
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidProject(request.resource.data) && isValidId(projectId);
+      allow delete: if isAdmin();
+    }
+
+    // 3. Blogs (read by anyone; write only by verified admin)
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidBlog(request.resource.data) && isValidId(blogId);
+      allow delete: if isAdmin();
+    }
+
+    // 4. Journals (read by anyone; write only by verified admin)
+    match /journals/{journalId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidJournal(request.resource.data) && isValidId(journalId);
+      allow delete: if isAdmin();
+    }
+
+    // 5. Messages (creation by guest, read & delete by verified admin)
+    match /messages/{messageId} {
+      allow create: if isValidMessage(request.resource.data) && isValidId(messageId);
+      allow read, delete: if isAdmin();
+      allow update: if false; // Messages are immutable
+    }
+  }
+}
